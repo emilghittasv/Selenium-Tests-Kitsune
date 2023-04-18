@@ -1,0 +1,3 @@
+.pytest_cache/
+geckodriver.log
+chromedriver.log
