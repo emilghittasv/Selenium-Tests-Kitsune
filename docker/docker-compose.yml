@@ -28,6 +28,6 @@ services:
       - "4443:4443"
       - "4444:4444"
     healthcheck:
-      test: curl --sSL -s http://localhost:4444/wd/hub/status | grep "\"success\":true
+      test: curl --sSL -s http://selenium-hub:4444/wd/hub/status | grep "\"success\":true
       interval: 30s
       retries: 10
