@@ -16,12 +16,12 @@ jobs:
           sudo apt-get update
           pip3 install --user poetry
           poetry install
-      - name: Start Selenium Grid containers and run tests
+      - name: Start Selenium Grid containers
         working-directory: docker/
         env:
           DOCKER_HOST: tcp://localhost:4444
         run: |
-          docker-compose up -d
+          docker-compose -f docker-compose.yml up -d
       - name: Wait for Selenium Grid containers to start
         run: |
           while ! curl -sSL "http://localhost:4444/wd/hub/status" 2>&1 > /dev/null; do sleep 1; done
@@ -32,4 +32,4 @@ jobs:
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose down
+          docker-compose -f docker-compose.yml down
