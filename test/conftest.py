@@ -1,3 +1,4 @@
+import socket
 import pytest
 import docker
 
@@ -69,7 +70,6 @@ def logger_setup():
 def get_docker_container_ip():
     client = docker.from_env()
     container = client.containers.get("selenium-hub")
-    inspect = client.api.inspect_container(container.id)
-    ip_address = inspect["NetworkSettings"]["IPAddress"]
+    ip_address = container.attrs["NetworkSettings"]["IPAddress"]
 
-    return ip_address
+    return socket.gethostbyname(ip_address)
