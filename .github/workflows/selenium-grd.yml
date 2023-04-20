@@ -22,7 +22,7 @@ jobs:
           docker-compose -f docker-compose.yml up -d
       - name: Run tests
         run: |
-          pytest -m smokeTest -n2
+          poetry run pytest -m smokeTest -n2
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
