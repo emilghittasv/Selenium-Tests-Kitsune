@@ -22,6 +22,7 @@ jobs:
           docker-compose build
           docker-compose up -d
       - name: Wait for Selenium Hub to be ready
+        working-directory: docker/
         run:
           docker-compose run --rm hub sh -c 'while ! curl -sSL http://localhost:4444/wd/hub/status | grep "\"success\":true"; do sleep 1; done;'
       - name: Start Selenium tests
