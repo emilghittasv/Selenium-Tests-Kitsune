@@ -73,3 +73,7 @@ def get_docker_container_ip():
     ip_address = container.attrs["NetworkSettings"]["IPAddress"]
 
     return socket.gethostbyname(ip_address)
+
+
+def pytest_sessionfinish(session, exitstatus):
+    TestUtilities().send_email_with_html_report()

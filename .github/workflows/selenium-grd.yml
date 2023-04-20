@@ -1,0 +1,24 @@
+name: Selenium Grid tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install --user poetry
+          poetry install
+      - name: Start Selenium Grid containers
+        run: |
+          docker-compose -f docker-compose.yml up -d
+      - name: Run tests
+        run: |
+          pytest -m smokeTest -n2
+      - name: Stop Selenium Grid containers
+        run: |
+          docker-compose -f selenium-compose.yml down
