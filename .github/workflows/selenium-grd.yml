@@ -36,4 +36,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Selenium test report
-          path: reports/report.html
+          path: |
+            reports/
