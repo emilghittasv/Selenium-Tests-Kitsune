@@ -16,12 +16,10 @@ jobs:
           sudo apt-get update
           pip3 install --user poetry
           poetry install
-      - name: Start Selenium Grid containers
+      - name: Start Selenium Grid containers and run tests
         working-directory: docker/
         run: |
-          docker-compose up -d
-      - name: Run tests
-        run: |
+          docker-compose up 
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
           poetry run pytest -m smokeTest -n2
       - name: Stop Selenium Grid containers
