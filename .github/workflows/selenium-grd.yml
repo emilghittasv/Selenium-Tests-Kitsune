@@ -20,7 +20,7 @@ jobs:
         working-directory: docker/
         run: |
           docker-compose build
-          docker-compose up -d
+          docker-compose up -d && docker-compose logs
       - name: Wait for Selenium Hub to be ready
         working-directory: docker/
         run:
