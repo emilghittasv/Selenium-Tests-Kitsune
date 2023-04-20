@@ -27,7 +27,3 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "4444:4444"
-    healthcheck:
-      test: ["CMD-SHELL","curl -sSL http://localhost:4444/wd/hub/status | jq -e .value.ready | grep true"]
-      interval: 1s
-      retries: 120

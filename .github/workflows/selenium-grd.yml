@@ -20,11 +20,11 @@ jobs:
         working-directory: docker/
         run: |
           docker-compose up --build -d
-          docker-compose run --rm --entrypoint /bin/bash selenium-hub -c 'while ! curl -sSL http://localhost:4444/wd/hub/status | jq -e .value.ready | grep true; do sleep 1; done'
+          docker-compose run --rm --entrypoint sh wait-for -c "http://selenium-hub:4444/wd/hub/status  -s -t 30"
       - name: Start Selenium tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
-          docker-compose run --rm --network=selenium_grid_default --entrypoint /bin/bash selenium-tests -c 'poetry run pytest -m smokeTest -n2'
+          poetry run pytest -m smokeTest -n2
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
