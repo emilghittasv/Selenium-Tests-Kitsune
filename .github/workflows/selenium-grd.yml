@@ -20,7 +20,7 @@ jobs:
         working-directory: docker/
         run: |
           docker-compose up --build -d
-          docker-compose run --rm --entrypoint sh wait-for -c "http://selenium-hub:4444/wd/hub/status  -s -t 30"
+          docker-compose run --rm wait-for
       - name: Start Selenium tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
