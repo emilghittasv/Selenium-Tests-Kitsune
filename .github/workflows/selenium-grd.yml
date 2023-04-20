@@ -21,10 +21,9 @@ jobs:
         run: |
           docker-compose build
           docker-compose up -d
-      - name: Wait for Selenium Hub to be ready
-        working-directory: docker/
-        run:
-          docker-compose run --rm selenium-hub sh -c 'while ! curl -sSL http://selenium-hub:4444/wd/hub/status | grep "\"success\":true"; do sleep 1; done;'
+      - name: Wait for Selenium Grid to start
+        run: |
+          until docker exec selenium-hub curl -sSL "http://localhost:4444/wd/hub/status" > /dev/null 2>&1; do sleep 1; done
       - name: Start Selenium tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
