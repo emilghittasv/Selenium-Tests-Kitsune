@@ -27,7 +27,7 @@ jobs:
       - name: Start Selenium tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
-          poetry run pytest -m smokeTest -n2 -html=reports/report.html --capture=tee-sys
+          poetry run pytest -m smokeTest -n2 --html=reports/report.html --capture=tee-sys
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
