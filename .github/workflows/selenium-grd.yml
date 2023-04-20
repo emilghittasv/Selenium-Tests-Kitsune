@@ -16,13 +16,34 @@ jobs:
           sudo apt-get update
           pip3 install --user poetry
           poetry install
-      - name: Start Selenium Grid containers and run tests
+      - name: Start Selenium Grid containers
+        working-directory: docker/
+        id: start-containers
+        run: |
+          docker-compose up -d
+        # Wait for the containers to be fully built
+        timeout-minutes: 10
+        continue-on-error: true
+        env:
+          DOCKER_HOST: tcp://localhost:444
+        # Check the status of the containers
+        # and fail the job if they are not all healthy
+        # (exit code 1 from the 'docker inspect' command)
+        if: |
+          ${{ steps.start-containers.outcome }} == 'success'
+          run: |
+            set -e
+            until docker inspect --format='{{range .State.Health.Log}} {{.Output}} {{end}}' $(docker-compose ps -q) | grep 'Selenium Grid hub is up and running'; do
+              echo 'Waiting for Selenium Grid containers to be fully built...'
+              sleep 5
+            done
+            echo 'Selenium Grid containers are up and running!'
+      - name: Run tests
         working-directory: docker/
         run: |
-          docker-compose up 
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
           poetry run pytest -m smokeTest -n2
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose down
+          docker-compose down+
