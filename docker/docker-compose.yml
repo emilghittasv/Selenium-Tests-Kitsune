@@ -29,5 +29,6 @@ services:
       - "4444:4444"
 
   wait-for:
-    image: vishnubob/wait-for-it
-    command: ["--timeout=30", "selenium-hub:4444"]
+    image: eficode/wait-for-it
+    command: selenium-hub:4444
+    restart: "no"
