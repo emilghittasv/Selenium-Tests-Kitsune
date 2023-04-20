@@ -19,7 +19,7 @@ jobs:
       - name: Start Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose up
+          docker-compose up -d
       - name: Run tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
