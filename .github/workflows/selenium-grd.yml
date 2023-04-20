@@ -16,14 +16,10 @@ jobs:
           sudo apt-get update
           pip3 install --user poetry
           poetry install
-          sudo wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/local/bin/wait-for-it.sh
-          sudo chmod +x /usr/local/bin/wait-for-it.sh
       - name: Start Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose -f docker-compose.yml up -d
-          hub_ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' selenium-hub)
-          wait-for-it.sh "$hub_ip:4444" -t 0
+          docker-compose docker-compose.yml up
       - name: Run tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
@@ -31,4 +27,4 @@ jobs:
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose -f selenium-compose.yml down
+          docker-compose docker-compose.yml down
