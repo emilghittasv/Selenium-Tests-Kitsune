@@ -17,11 +17,13 @@ jobs:
           pip3 install --user poetry
           poetry install
       - name: Start Selenium Grid containers
+        working-directory: docker/docker-compose.yml
         run: |
           docker-compose -f docker-compose.yml up -d
       - name: Run tests
         run: |
           pytest -m smokeTest -n2
       - name: Stop Selenium Grid containers
+        working-directory: docker/docker-compose.yml
         run: |
           docker-compose -f selenium-compose.yml down
