@@ -27,8 +27,13 @@ jobs:
       - name: Start Selenium tests
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
-          poetry run pytest -m smokeTest -n2
+          poetry run pytest -m smokeTest -n2 -html=reports/report.html --capture=tee-sys
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
           docker-compose down
+      - name: Upload the test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Selenium test report
+          path: reports/report.html
