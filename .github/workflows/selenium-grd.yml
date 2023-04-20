@@ -10,6 +10,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
+          pip3 install --user poetry
           poetry install
       - name: Start Selenium Grid containers
         run: |
