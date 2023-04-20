@@ -27,4 +27,4 @@ jobs:
       - name: Stop Selenium Grid containers
         working-directory: docker/
         run: |
-          docker-compose -f selenium-compose.yml down
+          docker-compose -f docker-compose.yml down
