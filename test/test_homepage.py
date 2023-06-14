@@ -23,6 +23,9 @@ class TestHomepage(TestUtilities):
             "Verifying that the 'Join Our Community' card has the correct strings applied"
         )
 
+        self.logger.info(os.environ['SIMPLE_TEST_USER'])
+        self.logger.info(os.environ['SIMPLE_TEST_USER_PASSWORD'])
+
         assert (
             self.pages.homepage.get_community_card_title()
             == HomepageMessages.JOIN_OUR_COMMUNITY_CARD_TITLE

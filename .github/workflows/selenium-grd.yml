@@ -25,6 +25,9 @@ jobs:
         run: |
           until docker exec selenium-hub curl -sSL "http://localhost:4444/wd/hub/status" > /dev/null 2>&1; do sleep 1; done
       - name: Start Selenium tests
+        env:
+            SIMPLE_TEST_USER: ${{ secrets.SIMPLE_TEST_USER }}
+            SIMPLE_TEST_USER_PASSWORD: ${{ secrets.SIMPLE_TEST_USER_PASSWORD }}
         run: |
           export PYTHONPATH=${PYTHONPATH}:${GITHUB_WORKSPACE}/Selenium-Tests-Kitsune/
           poetry run pytest -m smokeTest -n2 --html=reports/report.html --capture=tee-sys
